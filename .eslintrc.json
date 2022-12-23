@@ -3,15 +3,36 @@
         "es2021": true,
         "node": true
     },
-    "extends": "standard-with-typescript",
-    "overrides": [
-    ],
-    "parserOptions": {
+    "extends": [
+        "standard",
+        "eslint:recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "double"]
-    }
+        "sourceType": "module" 
+      },
+      "plugins": [
+        "@typescript-eslint"  // Для TypeScript.
+      ],
+      "overrides": [ // Используем `overrides`, чтобы ESLint мог проверять файлы как JS, так и TS.
+        {
+          "files": ["*.ts", "*.tsx"],
+          "extends": [
+            "plugin:@typescript-eslint/recommended", 
+            "plugin:@typescript-eslint/recommended-requiring-type-checking" 
+          ],
+          "parserOptions": {
+            "tsconfigRootDir": "",  
+            "project": ["./tsconfig.json"]
+          }
+        }
+      ],
+      "ignorePatterns": [".eslintrc.js"],
+      "rules": {
+        "quotes": ["error", "double"],  // Использовать двойные кавычки.
+        "semi": ["error", "always"],  // Всегда добавлять точку с запятой в конце утверждения.
+        "indent": ["error", 4],  // Отступ — это два пробела.
+        "no-console": "off"  // Избегать использования в коде методов на консоли (`console`).
+      }
 }
