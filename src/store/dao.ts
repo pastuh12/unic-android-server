@@ -6,7 +6,7 @@ import Promise from "bluebird";
 class AppDAO {
     db: sqlite3.Database;
 
-    constructor(dbFilePath = process.env.DB_NAME || "database.db") {
+    constructor(dbFilePath = "database.db") {
         this.db = new sqlite3.Database(dbFilePath, (err) => {
             if (err) {
                 console.log("Could not connect to database", err);
