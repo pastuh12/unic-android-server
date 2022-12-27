@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     res.send("Get all departments");
 });
 
-router.get("/");
+router.post("/");
 // define the about route
 router.post("/bigEntity", (req, res) => {
     res.send("On post bigEntity");

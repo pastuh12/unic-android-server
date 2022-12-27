@@ -17,17 +17,26 @@ class DepartmentsRepository {
         return this.dao.run(sql);
     }
 
-    create(depart: Department) {
+    create(department: Department) {
         return this.dao.run(
             "INSERT INTO departments (title) VALUES (?)",
-            [depart.title]);
+            [department.title])
+            .then((data) => {
+                if (typeof data === "object" && data && "id" in data && typeof data.id === "number") {
+                    department.id = data.id;
+                    return department;
+                }
+            });
     }
 
     update(department: Department) {
         return this.dao.run(
             "UPDATE departments SET title = ? WHERE id = ?",
             [department.title, department.id]
-        );
+        )
+            .then(() => {
+                return department;
+            });
     }
 
     delete(id: number) {
@@ -47,7 +56,7 @@ class DepartmentsRepository {
         return this.dao.all("SELECT * FROM departments");
     }
 
-    getTasks(departmentId: number) {
+    getCouriers(departmentId: number) {
         return this.dao.all(
             "SELECT * FROM couriers WHERE departmentId = ?",
             [departmentId]);

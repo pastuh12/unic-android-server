@@ -36,7 +36,15 @@ class CourierRepository {
                 courier.deliveryMethod,
                 courier.departmentId
             ]
-        );
+        )
+            .then(
+                (data) => {
+                    if (typeof data === "object" && data && "id" in data && typeof data.id === "number") {
+                        courier.id = +data.id;
+                        return courier;
+                    }
+                }
+            );
     }
 
     update(courier: Courier) {
@@ -58,7 +66,10 @@ class CourierRepository {
                 courier.departmentId,
                 courier.id
             ]
-        );
+        )
+            .then(() => {
+                return courier;
+            });
     }
 
     delete(id: number) {
