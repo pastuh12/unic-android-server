@@ -70,30 +70,25 @@ app.post("/departments", (request, response) => {
         });
     }
     else {
-        response.status(404).send({ Bad_name: String(request.body.department.name) });
+        response.status(404).send({ Bad_name: String(request.body.name) });
     }
 });
 app.patch("/departments/:id", (request, response) => {
-    if (typeof request.body.department === "object") {
-        if (typeof request.body.department.name === "string") {
-            const department = new department_1.default(+request.params.id, request.body.department.name);
-            departRepo.update(department)
-                .then((data) => {
-                console.log("Department: ");
-                console.log(data);
-                response.send({ Department: data });
-            })
-                .catch(err => {
-                console.error(err);
-                response.status(500).send({ Error: String(err) });
-            });
-        }
-        else {
-            response.status(404).send({ Bad_name: String(request.body.department.name) });
-        }
+    if (typeof request.body.name === "string") {
+        const department = new department_1.default(+request.params.id, request.body.name);
+        departRepo.update(department)
+            .then((data) => {
+            console.log("Department: ");
+            console.log(data);
+            response.send({ Department: data });
+        })
+            .catch(err => {
+            console.error(err);
+            response.status(500).send({ Error: String(err) });
+        });
     }
     else {
-        response.status(404).send("Bad body");
+        response.status(404).send({ Bad_name: String(request.body.name) });
     }
 });
 app.delete("/departments/:id", (request, response) => {
@@ -118,36 +113,26 @@ app.get("/couriers", (request, response) => {
     });
 });
 app.post("/couriers", (request, response) => {
-    if ("courier" in request.body) {
-        const courier = new courier_1.default(request.body.courier);
-        courierRepo.create(courier)
-            .then((data) => {
-            response.json(data);
-        })
-            .catch(err => {
-            console.error(err);
-            response.status(500).json({ error: String(err) });
-        });
-    }
-    else {
-        response.status(404).json({ error: "Bad body" });
-    }
+    const courier = new courier_1.default(request.body.id, request.body.firstname, request.body.lastname, request.body.middlename, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.department, request.body.allOrders);
+    courierRepo.create(courier)
+        .then((data) => {
+        response.json(data);
+    })
+        .catch(err => {
+        console.error(err);
+        response.status(500).json({ error: String(err) });
+    });
 });
 app.patch("/couriers/:id", (request, response) => {
-    if ("courier" in request.body) {
-        const courier = new courier_1.default(request.body.courier);
-        courierRepo.update(courier)
-            .then((data) => {
-            response.json(data);
-        })
-            .catch(err => {
-            console.error(err);
-            response.status(500).send("Error");
-        });
-    }
-    else {
-        response.status(404).send("Bad body");
-    }
+    const courier = new courier_1.default(request.body.id, request.body.firstname, request.body.lastname, request.body.middlename, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.department, request.body.allOrders);
+    courierRepo.update(courier)
+        .then((data) => {
+        response.json(data);
+    })
+        .catch(err => {
+        console.error(err);
+        response.status(500).send("Error");
+    });
 });
 app.delete("/couriers/:id", (request, response) => {
     courierRepo.delete(+request.params.id)
