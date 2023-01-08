@@ -1,10 +1,10 @@
 class Department {
     id :number;
-    title :string;
+    name :string;
 
-    constructor(id = 0, title : string) {
+    constructor(id = 0, name : string) {
         this.id = id;
-        this.title = title;
+        this.name = name;
     }
 }
 

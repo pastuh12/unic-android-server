@@ -36,8 +36,8 @@ app.get("/departments", (request, response) => {
 
 app.post("/departments", (request, response) => {
     if (typeof request.body.department === "object") {
-        if (typeof request.body.department.title === "string") {
-            const department = new Department(undefined, request.body.department.title);
+        if (typeof request.body.department.name === "string") {
+            const department = new Department(undefined, request.body.department.name);
             departRepo.create(department)
                 .then((data) => {
                     console.log("Department: ");
@@ -49,7 +49,7 @@ app.post("/departments", (request, response) => {
                     response.status(500).send("Error");
                 });
         } else {
-            response.status(404).send({ Bad_title: String(request.body.department.title) });
+            response.status(404).send({ Bad_name: String(request.body.department.name) });
         }
     } else {
         response.status(404).send("Bad body");
@@ -58,8 +58,8 @@ app.post("/departments", (request, response) => {
 
 app.patch("/departments/:id", (request, response) => {
     if (typeof request.body.department === "object") {
-        if (typeof request.body.department.title === "string") {
-            const department = new Department(+request.params.id, request.body.department.title);
+        if (typeof request.body.department.name === "string") {
+            const department = new Department(+request.params.id, request.body.department.name);
             departRepo.update(department)
                 .then((data) => {
                     console.log("Department: ");
@@ -71,7 +71,7 @@ app.patch("/departments/:id", (request, response) => {
                     response.status(500).send({ Error: String(err) });
                 });
         } else {
-            response.status(404).send({ Bad_title: String(request.body.department.title) });
+            response.status(404).send({ Bad_name: String(request.body.department.name) });
         }
     } else {
         response.status(404).send("Bad body");
