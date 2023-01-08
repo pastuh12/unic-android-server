@@ -35,24 +35,20 @@ app.get("/departments", (request, response) => {
 });
 
 app.post("/departments", (request, response) => {
-    if (typeof request.body.department === "object") {
-        if (typeof request.body.department.name === "string") {
-            const department = new Department(undefined, request.body.department.name);
-            departRepo.create(department)
-                .then((data) => {
-                    console.log("Department: ");
-                    console.log(data);
-                    response.json(data);
-                })
-                .catch(err => {
-                    console.error(err);
-                    response.status(500).send("Error");
-                });
-        } else {
-            response.status(404).send({ Bad_name: String(request.body.department.name) });
-        }
+    if (typeof request.body.name === "string") {
+        const department = new Department(undefined, request.body.name);
+        departRepo.create(department)
+            .then((data) => {
+                console.log("Department: ");
+                console.log(data);
+                response.json(data);
+            })
+            .catch(err => {
+                console.error(err);
+                response.status(500).send("Error");
+            });
     } else {
-        response.status(404).send("Bad body");
+        response.status(404).send({ Bad_name: String(request.body.department.name) });
     }
 });
 
