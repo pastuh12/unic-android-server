@@ -5,11 +5,8 @@ import express from "express";
 import AppDAO from "./store/dao";
 import DepartmentsRepository from "./store/departmentsRepository";
 import CourierRepository from "./store/courierRepository";
-import { resolve } from "path";
-import { reject, Promise } from "bluebird";
 import Department from "./store/models/department";
 import Courier from "./store/models/courier";
-import { title } from "process";
 
 dotenv.config();
 
