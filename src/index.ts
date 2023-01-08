@@ -101,7 +101,7 @@ app.get("/couriers", (request, response) => {
 });
 
 app.post("/couriers", (request, response) => {
-    const courier = new Courier(request.body.id, request.body.firstName, request.body.lastName, request.body.middleName, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.department, request.body.allOrders);
+    const courier = new Courier(request.body.id, request.body.firstName, request.body.lastName, request.body.middleName, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.departmentId, request.body.allOrders);
     courierRepo.create(courier)
         .then((data) => {
             response.json(data);
