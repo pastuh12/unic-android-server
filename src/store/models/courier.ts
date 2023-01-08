@@ -6,23 +6,25 @@ class Courier {
     unfulfilledOrders: number;
     deliveryMethod: number;
     departmentId: number;
+    allOrders: number;
 
-    constructor(courier: {
+    constructor(
         id: number,
         firstName: string,
         lastName: string,
         middleName: string,
         unfulfilledOrders: number,
         deliveryMethod: number,
-        departmentId: number
-    }) {
-        this.id = courier.id;
-        this.firstName = courier.firstName;
-        this.lastName = courier.lastName;
-        this.middleName = courier.middleName;
-        this.unfulfilledOrders = courier.unfulfilledOrders;
-        this.deliveryMethod = courier.deliveryMethod;
-        this.departmentId = courier.departmentId;
+        departmentId: number,
+        allOrders: number) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.unfulfilledOrders = unfulfilledOrders;
+        this.deliveryMethod = deliveryMethod;
+        this.departmentId = departmentId;
+        this.allOrders = allOrders;
     }
 }
 
