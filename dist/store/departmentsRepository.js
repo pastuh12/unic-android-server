@@ -9,12 +9,13 @@ class DepartmentsRepository {
         const sql = `
         CREATE TABLE IF NOT EXISTS departments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT
-        );`;
+            name TEXT
+        );
+        `;
         return this.dao.run(sql);
     }
     create(department) {
-        return this.dao.run("INSERT INTO departments (title) VALUES (?)", [department.title])
+        return this.dao.run("INSERT INTO departments (name) VALUES (?)", [department.name])
             .then((data) => {
             if (typeof data === "object" && data && "id" in data && typeof data.id === "number") {
                 department.id = data.id;
@@ -23,7 +24,7 @@ class DepartmentsRepository {
         });
     }
     update(department) {
-        return this.dao.run("UPDATE departments SET title = ? WHERE id = ?", [department.title, department.id])
+        return this.dao.run("UPDATE departments SET name = ? WHERE id = ?", [department.name, department.id])
             .then(() => {
             return department;
         });

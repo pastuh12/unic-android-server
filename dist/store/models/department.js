@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Department {
     id;
-    title;
-    constructor(id = 0, title) {
+    name;
+    constructor(id = 0, name) {
         this.id = id;
-        this.title = title;
+        this.name = name;
     }
 }
 exports.default = Department;

@@ -56,32 +56,27 @@ app.get("/departments", (request, response) => {
     });
 });
 app.post("/departments", (request, response) => {
-    if (typeof request.body.department === "object") {
-        if (typeof request.body.department.title === "string") {
-            const department = new department_1.default(undefined, request.body.department.title);
-            departRepo.create(department)
-                .then((data) => {
-                console.log("Department: ");
-                console.log(data);
-                response.json(data);
-            })
-                .catch(err => {
-                console.error(err);
-                response.status(500).send("Error");
-            });
-        }
-        else {
-            response.status(404).send({ Bad_title: String(request.body.department.title) });
-        }
+    if (typeof request.body.name === "string") {
+        const department = new department_1.default(undefined, request.body.name);
+        departRepo.create(department)
+            .then((data) => {
+            console.log("Department: ");
+            console.log(data);
+            response.json(data);
+        })
+            .catch(err => {
+            console.error(err);
+            response.status(500).send("Error");
+        });
     }
     else {
-        response.status(404).send("Bad body");
+        response.status(404).send({ Bad_name: String(request.body.department.name) });
     }
 });
 app.patch("/departments/:id", (request, response) => {
     if (typeof request.body.department === "object") {
-        if (typeof request.body.department.title === "string") {
-            const department = new department_1.default(+request.params.id, request.body.department.title);
+        if (typeof request.body.department.name === "string") {
+            const department = new department_1.default(+request.params.id, request.body.department.name);
             departRepo.update(department)
                 .then((data) => {
                 console.log("Department: ");
@@ -94,7 +89,7 @@ app.patch("/departments/:id", (request, response) => {
             });
         }
         else {
-            response.status(404).send({ Bad_title: String(request.body.department.title) });
+            response.status(404).send({ Bad_name: String(request.body.department.name) });
         }
     }
     else {
