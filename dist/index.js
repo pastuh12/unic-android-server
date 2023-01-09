@@ -26,6 +26,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable eqeqeq */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 const dotenv = __importStar(require("dotenv"));
@@ -108,24 +113,15 @@ app.delete("/departments/:id", (request, response) => {
 // couriers
 app.get("/couriers", (request, response) => {
     courierRepo.getAll()
-        .then((data) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        data.map(
-        // eslint-disable-next-line array-callback-return
-        (value) => {
-            orderRepo.getByCourierId(value.id)
-                .then((orders) => {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                value.allOrders = orders.length;
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-                value.unfulfilledOrders = orders.filter((item) => item.isfulFilled === false).length;
-            })
-                .catch(err => {
-                console.log(err);
-            });
+        .then((couriers) => orderRepo.getAll()
+        .then((orders) => {
+        couriers.map((courier) => {
+            courier.allOrders = orders.filter((order) => order.courierId === courier.id).length;
+            courier.unfulfilledOrders = orders.filter((order) => order.courierId === courier.id && order.isfulFilled == false).length;
         });
-        response.json(data);
-    })
+        console.log(couriers);
+        response.send(couriers);
+    }))
         .catch(err => {
         console.error(err);
         response.status(500).send("Error");

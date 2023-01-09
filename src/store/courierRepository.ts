@@ -28,7 +28,7 @@ class CourierRepository {
     create(courier: Courier) {
         return this.dao.run(
             `INSERT INTO couriers (firstName, lastName, middleName, unfulfilledOrders, deliveryMethod, departmentId, allOrders)
-                VALUES (?, ?, ?, ?, ?, ?)`,
+                VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
                 courier.firstName,
                 courier.lastName,

@@ -1,3 +1,8 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as dotenv from "dotenv";
@@ -9,6 +14,7 @@ import Department from "./store/models/department";
 import Courier from "./store/models/courier";
 import Order from "./store/models/order";
 import OrdersRepository from "./store/orderRepository";
+import { resolve } from "path";
 
 dotenv.config();
 
@@ -92,27 +98,24 @@ app.delete("/departments/:id", (request, response) => {
 app.get("/couriers", (request, response) => {
     courierRepo.getAll()
         .then(
-            (data: any) => {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                data.map(
-                    // eslint-disable-next-line array-callback-return
-                    (value: Courier) => {
-                        orderRepo.getByCourierId(value.id)
-                            .then(
-                                (orders: any) => {
-                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                    value.allOrders = orders.length;
-                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-                                    value.unfulfilledOrders = orders.filter((item: Order) => item.isfulFilled === false).length;
+            (couriers: any) =>
+                orderRepo.getAll()
+                    .then(
+                        (orders: any) => {
+                            couriers.map(
+                                (courier: Courier) => {
+                                    courier.allOrders = orders.filter(
+                                        (order: Order) => order.courierId === courier.id
+                                    ).length;
+                                    courier.unfulfilledOrders = orders.filter(
+                                        (order: Order) => order.courierId === courier.id && order.isfulFilled == false
+                                    ).length;
                                 }
-                            )
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
-                );
-                response.json(data);
-            }
+                            );
+                            console.log(couriers);
+                            response.send(couriers);
+                        }
+                    )
         )
         .catch(
             err => {
