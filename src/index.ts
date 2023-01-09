@@ -63,7 +63,7 @@ app.patch("/departments/:id", (request, response) => {
             .then((data) => {
                 console.log("Department: ");
                 console.log(data);
-                response.send({ Department: data });
+                response.send({ data });
             })
             .catch(err => {
                 console.error(err);
