@@ -1,6 +1,5 @@
 import Dao from "./dao";
 import Courier from "./models/courier";
-import OrdersRepository from "./orderRepository";
 
 class CourierRepository {
     dao: Dao;
@@ -17,6 +16,7 @@ class CourierRepository {
             lastName TEXT,
             middleName TEXT,
             unfulfilledOrders INTEGER DEFAULT 0,
+            allOrders INTEGER DEFAULT 0,
             deliveryMethod INTEGER DEFAULT 0,
             departmentId INTEGER,
             CONSTRAINT courier_fk_departmentsId FOREIGN KEY (departmentId)
@@ -27,7 +27,7 @@ class CourierRepository {
 
     create(courier: Courier) {
         return this.dao.run(
-            `INSERT INTO couriers (firstName, lastName, middleName, unfulfilledOrders, deliveryMethod, departmentId)
+            `INSERT INTO couriers (firstName, lastName, middleName, unfulfilledOrders, deliveryMethod, departmentId, allOrders)
                 VALUES (?, ?, ?, ?, ?, ?)`,
             [
                 courier.firstName,
@@ -35,7 +35,8 @@ class CourierRepository {
                 courier.middleName,
                 courier.unfulfilledOrders,
                 courier.deliveryMethod,
-                courier.departmentId
+                courier.departmentId,
+                courier.allOrders
             ]
         )
             .then(
@@ -56,7 +57,8 @@ class CourierRepository {
                 middleName = ?,
                 unfulfilledOrders = ?,
                 deliveryMethod = ?,
-                departmentId = ?
+                departmentId = ?,
+                allOrders = ?
                 WHERE id = ?`,
             [
                 courier.firstName,
@@ -65,6 +67,7 @@ class CourierRepository {
                 courier.unfulfilledOrders,
                 courier.deliveryMethod,
                 courier.departmentId,
+                courier.allOrders,
                 courier.id
             ]
         )

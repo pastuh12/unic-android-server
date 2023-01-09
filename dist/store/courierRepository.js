@@ -13,6 +13,7 @@ class CourierRepository {
             lastName TEXT,
             middleName TEXT,
             unfulfilledOrders INTEGER DEFAULT 0,
+            allOrders INTEGER DEFAULT 0,
             deliveryMethod INTEGER DEFAULT 0,
             departmentId INTEGER,
             CONSTRAINT courier_fk_departmentsId FOREIGN KEY (departmentId)
@@ -21,14 +22,15 @@ class CourierRepository {
         return this.dao.run(sql);
     }
     create(courier) {
-        return this.dao.run(`INSERT INTO couriers (firstName, lastName, middleName, unfulfilledOrders, deliveryMethod, departmentId)
+        return this.dao.run(`INSERT INTO couriers (firstName, lastName, middleName, unfulfilledOrders, deliveryMethod, departmentId, allOrders)
                 VALUES (?, ?, ?, ?, ?, ?)`, [
             courier.firstName,
             courier.lastName,
             courier.middleName,
             courier.unfulfilledOrders,
             courier.deliveryMethod,
-            courier.departmentId
+            courier.departmentId,
+            courier.allOrders
         ])
             .then((data) => {
             if (typeof data === "object" && data && "id" in data && typeof data.id === "number") {
@@ -44,7 +46,8 @@ class CourierRepository {
                 middleName = ?,
                 unfulfilledOrders = ?,
                 deliveryMethod = ?,
-                departmentId = ?
+                departmentId = ?,
+                allOrders = ?
                 WHERE id = ?`, [
             courier.firstName,
             courier.lastName,
@@ -52,6 +55,7 @@ class CourierRepository {
             courier.unfulfilledOrders,
             courier.deliveryMethod,
             courier.departmentId,
+            courier.allOrders,
             courier.id
         ])
             .then(() => {
