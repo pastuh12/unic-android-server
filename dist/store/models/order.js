@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class order {
+class Order {
     id;
     address;
     isfulFilled;
@@ -14,5 +14,5 @@ class order {
         this.courierId = courierId;
     }
 }
-exports.default = order;
+exports.default = Order;
 //# sourceMappingURL=order.js.map

@@ -41,9 +41,6 @@ class OrdersRepository {
     getAll() {
         return this.dao.all("SELECT * FROM orders");
     }
-    getOrders(orderId) {
-        return this.dao.all("SELECT * FROM couriers WHERE orderId = ?", [orderId]);
-    }
 }
 exports.default = OrdersRepository;
 //# sourceMappingURL=orderRepository.js.map

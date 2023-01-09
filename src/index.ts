@@ -24,6 +24,7 @@ const orderRepo = new OrdersRepository(Store);
 
 departRepo.createTable()
     .then(() => courierRepo.createTable())
+    .then(() => orderRepo.createTable())
     .then(() => console.log("success"))
     .catch((err) => console.error(err));
 
@@ -149,9 +150,9 @@ app.get("/orders", (request, response) => {
             }
         )
         .catch(
-            err => {
+            (err: Error) => {
                 console.error(err);
-                response.status(500).send("Error");
+                response.status(500).send(`${err.message}`);
             }
         );
 });

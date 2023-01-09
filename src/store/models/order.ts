@@ -1,4 +1,4 @@
-class order {
+class Order {
     id: number;
     address: string;
     isfulFilled: boolean;
@@ -20,4 +20,4 @@ class order {
     }
 }
 
-export default order;
+export default Order;

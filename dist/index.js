@@ -47,6 +47,7 @@ const courierRepo = new courierRepository_1.default(Store);
 const orderRepo = new orderRepository_1.default(Store);
 departRepo.createTable()
     .then(() => courierRepo.createTable())
+    .then(() => orderRepo.createTable())
     .then(() => console.log("success"))
     .catch((err) => console.error(err));
 // departments
@@ -150,9 +151,9 @@ app.get("/orders", (request, response) => {
         .then((data) => {
         response.json(data);
     })
-        .catch(err => {
+        .catch((err) => {
         console.error(err);
-        response.status(500).send("Error");
+        response.status(500).send(`${err.message}`);
     });
 });
 app.post("/orders", (request, response) => {
