@@ -161,9 +161,9 @@ app.post("/orders", (request, response) => {
     const order = new Order(
         request.body.id,
         request.body.address,
+        request.body.isfulFilled,
         request.body.prise,
-        request.body.courierId,
-        request.body.isfulFilled
+        request.body.courierId
     );
     orderRepo.create(order)
         .then((data) => {
