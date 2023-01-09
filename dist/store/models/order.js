@@ -6,12 +6,12 @@ class order {
     isfulFilled;
     prise;
     courierId;
-    constructor(order) {
-        this.id = order.id;
-        this.address = order.address;
-        this.isfulFilled = order.isfulFilled;
-        this.prise = order.prise;
-        this.courierId = order.courierId;
+    constructor(id, address, isfulFilled, prise, courierId) {
+        this.id = id;
+        this.address = address;
+        this.isfulFilled = isfulFilled;
+        this.prise = prise;
+        this.courierId = courierId;
     }
 }
 exports.default = order;

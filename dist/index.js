@@ -35,6 +35,8 @@ const departmentsRepository_1 = __importDefault(require("./store/departmentsRepo
 const courierRepository_1 = __importDefault(require("./store/courierRepository"));
 const department_1 = __importDefault(require("./store/models/department"));
 const courier_1 = __importDefault(require("./store/models/courier"));
+const order_1 = __importDefault(require("./store/models/order"));
+const orderRepository_1 = __importDefault(require("./store/orderRepository"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -42,6 +44,7 @@ const port = process.env.PORT || 8080;
 const Store = new dao_1.default(process.env.DB_NAME);
 const departRepo = new departmentsRepository_1.default(Store);
 const courierRepo = new courierRepository_1.default(Store);
+const orderRepo = new orderRepository_1.default(Store);
 departRepo.createTable()
     .then(() => courierRepo.createTable())
     .then(() => console.log("success"))
@@ -136,6 +139,46 @@ app.patch("/couriers/:id", (request, response) => {
 });
 app.delete("/couriers/:id", (request, response) => {
     courierRepo.delete(+request.params.id)
+        .then(() => response.send())
+        .catch((err) => {
+        console.error(err);
+        response.status(500).send("Error");
+    });
+});
+app.get("/orders", (request, response) => {
+    orderRepo.getAll()
+        .then((data) => {
+        response.json(data);
+    })
+        .catch(err => {
+        console.error(err);
+        response.status(500).send("Error");
+    });
+});
+app.post("/orders", (request, response) => {
+    const order = new order_1.default(request.body.id, request.body.address, request.body.prise, request.body.courierId, request.body.isfulFilled);
+    orderRepo.create(order)
+        .then((data) => {
+        response.json(data);
+    })
+        .catch(err => {
+        console.error(err);
+        response.status(500).json({ error: String(err) });
+    });
+});
+app.patch("/orders/:id", (request, response) => {
+    const order = new order_1.default(request.body.id, request.body.address, request.body.prise, request.body.courierId, request.body.isfulFilled);
+    orderRepo.update(order)
+        .then((data) => {
+        response.json(data);
+    })
+        .catch(err => {
+        console.error(err);
+        response.status(500).send("Error");
+    });
+});
+app.delete("/orders/:id", (request, response) => {
+    orderRepo.delete(+request.params.id)
         .then(() => response.send())
         .catch((err) => {
         console.error(err);
