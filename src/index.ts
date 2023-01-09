@@ -146,6 +146,20 @@ app.get("/orders", (request, response) => {
     orderRepo.getAll()
         .then(
             (data) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                data.map(
+                    // eslint-disable-next-line array-callback-return
+                    (value: Order) => {
+                        // eslint-disable-next-line eqeqeq
+                        if (value.isfulFilled == true) {
+                            console.log(value.isfulFilled);
+                            value.isfulFilled = true;
+                        } else {
+                            console.log(value.isfulFilled);
+                            value.isfulFilled = false;
+                        }
+                    }
+                );
                 response.json(data);
             }
         )
