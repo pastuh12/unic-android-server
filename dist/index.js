@@ -128,7 +128,7 @@ app.post("/couriers", (request, response) => {
     });
 });
 app.patch("/couriers/:id", (request, response) => {
-    const courier = new courier_1.default(request.body.id, request.body.firstName, request.body.lastName, request.body.middleName, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.department, request.body.allOrders);
+    const courier = new courier_1.default(request.body.id, request.body.firstName, request.body.lastName, request.body.middleName, request.body.unfulfilledOrders, request.body.deliveryMethod, request.body.departmentId, request.body.allOrders);
     courierRepo.update(courier)
         .then((data) => {
         response.json(data);
