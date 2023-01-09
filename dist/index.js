@@ -157,7 +157,7 @@ app.get("/orders", (request, response) => {
     });
 });
 app.post("/orders", (request, response) => {
-    const order = new order_1.default(request.body.id, request.body.address, request.body.prise, request.body.courierId, request.body.isfulFilled);
+    const order = new order_1.default(request.body.id, request.body.address, request.body.isfulFilled, request.body.prise, request.body.courierId);
     orderRepo.create(order)
         .then((data) => {
         response.json(data);
