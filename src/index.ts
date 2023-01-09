@@ -92,7 +92,25 @@ app.delete("/departments/:id", (request, response) => {
 app.get("/couriers", (request, response) => {
     courierRepo.getAll()
         .then(
-            (data) => {
+            (data: any) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                data.map(
+                    // eslint-disable-next-line array-callback-return
+                    (value: Courier) => {
+                        orderRepo.getByCourierId(value.id)
+                            .then(
+                                (orders: any) => {
+                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                    value.allOrders = orders.length;
+                                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+                                    value.unfulfilledOrders = orders.filter((item: Order) => item.isfulFilled === false).length;
+                                }
+                            )
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                );
                 response.json(data);
             }
         )
@@ -145,7 +163,7 @@ app.delete("/couriers/:id", (request, response) => {
 app.get("/orders", (request, response) => {
     orderRepo.getAll()
         .then(
-            (data) => {
+            (data: any) => {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
                 data.map(
                     // eslint-disable-next-line array-callback-return

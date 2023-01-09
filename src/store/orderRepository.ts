@@ -50,10 +50,10 @@ class OrdersRepository {
         );
     }
 
-    getById(id: number) {
+    getByCourierId(courierId: number) {
         return this.dao.get(
-            "SELECT * FROM orders WHERE id = ?",
-            [id]);
+            "SELECT * FROM orders WHERE courierId = ?",
+            [courierId]);
     }
 
     getAll() {

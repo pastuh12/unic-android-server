@@ -35,8 +35,8 @@ class OrdersRepository {
     delete(id) {
         return this.dao.run("DELETE FROM orders WHERE id = ?", [id]);
     }
-    getById(id) {
-        return this.dao.get("SELECT * FROM orders WHERE id = ?", [id]);
+    getByCourierId(courierId) {
+        return this.dao.get("SELECT * FROM orders WHERE courierId = ?", [courierId]);
     }
     getAll() {
         return this.dao.all("SELECT * FROM orders");

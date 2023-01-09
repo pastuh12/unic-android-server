@@ -109,6 +109,21 @@ app.delete("/departments/:id", (request, response) => {
 app.get("/couriers", (request, response) => {
     courierRepo.getAll()
         .then((data) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        data.map(
+        // eslint-disable-next-line array-callback-return
+        (value) => {
+            orderRepo.getByCourierId(value.id)
+                .then((orders) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                value.allOrders = orders.length;
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+                value.unfulfilledOrders = orders.filter((item) => item.isfulFilled === false).length;
+            })
+                .catch(err => {
+                console.log(err);
+            });
+        });
         response.json(data);
     })
         .catch(err => {

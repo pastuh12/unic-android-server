@@ -1,5 +1,6 @@
 import Dao from "./dao";
 import Courier from "./models/courier";
+import OrdersRepository from "./orderRepository";
 
 class CourierRepository {
     dao: Dao;
