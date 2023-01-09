@@ -204,6 +204,14 @@ app.patch("/orders/:id", (request, response) => {
     orderRepo.update(order)
         .then(
             (data) => {
+                // eslint-disable-next-line eqeqeq
+                if (data.isfulFilled == true) {
+                    console.log(data.isfulFilled);
+                    data.isfulFilled = true;
+                } else {
+                    console.log(data.isfulFilled);
+                    data.isfulFilled = false;
+                }
                 response.json(data);
             }
         )

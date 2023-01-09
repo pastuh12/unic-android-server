@@ -190,6 +190,15 @@ app.patch("/orders/:id", (request, response) => {
     const order = new order_1.default(request.body.id, request.body.address, request.body.prise, request.body.courierId, request.body.isfulFilled);
     orderRepo.update(order)
         .then((data) => {
+        // eslint-disable-next-line eqeqeq
+        if (data.isfulFilled == true) {
+            console.log(data.isfulFilled);
+            data.isfulFilled = true;
+        }
+        else {
+            console.log(data.isfulFilled);
+            data.isfulFilled = false;
+        }
         response.json(data);
     })
         .catch(err => {
