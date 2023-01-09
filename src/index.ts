@@ -159,7 +159,8 @@ app.get("/orders", (request, response) => {
 
 app.post("/orders", (request, response) => {
     let isfulFilled = false;
-    if (request.body.isfulFilled === 1) {
+    // eslint-disable-next-line eqeqeq
+    if (request.body.isfulFilled == 1) {
         isfulFilled = true;
     }
     const order = new Order(
