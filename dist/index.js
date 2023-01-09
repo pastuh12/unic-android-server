@@ -158,7 +158,7 @@ app.get("/orders", (request, response) => {
 });
 app.post("/orders", (request, response) => {
     let isfulFilled = false;
-    if (request.body.isfulFilled) {
+    if (request.body.isfulFilled === 1) {
         isfulFilled = true;
     }
     const order = new order_1.default(request.body.id, request.body.address, isfulFilled, request.body.prise, request.body.courierId);
