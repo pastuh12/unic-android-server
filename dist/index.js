@@ -157,7 +157,11 @@ app.get("/orders", (request, response) => {
     });
 });
 app.post("/orders", (request, response) => {
-    const order = new order_1.default(request.body.id, request.body.address, request.body.isfulFilled, request.body.prise, request.body.courierId);
+    let isfulFilled = false;
+    if (request.body.isfulFilled) {
+        isfulFilled = true;
+    }
+    const order = new order_1.default(request.body.id, request.body.address, isfulFilled, request.body.prise, request.body.courierId);
     orderRepo.create(order)
         .then((data) => {
         response.json(data);

@@ -158,10 +158,14 @@ app.get("/orders", (request, response) => {
 });
 
 app.post("/orders", (request, response) => {
+    let isfulFilled = false;
+    if (request.body.isfulFilled) {
+        isfulFilled = true;
+    }
     const order = new Order(
         request.body.id,
         request.body.address,
-        request.body.isfulFilled,
+        isfulFilled,
         request.body.prise,
         request.body.courierId
     );
