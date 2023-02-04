@@ -96,33 +96,35 @@ app.delete("/departments/:id", (request, response) => {
 // couriers
 
 app.get("/couriers", (request, response) => {
-    courierRepo.getAll()
-        .then(
-            (couriers: any) =>
-                orderRepo.getAll()
-                    .then(
-                        (orders: any) => {
-                            couriers.map(
-                                (courier: Courier) => {
-                                    courier.allOrders = orders.filter(
-                                        (order: Order) => order.courierId === courier.id
-                                    ).length;
-                                    courier.unfulfilledOrders = orders.filter(
-                                        (order: Order) => order.courierId === courier.id && order.isfulFilled == false
-                                    ).length;
-                                }
-                            );
-                            console.log(couriers);
-                            response.send(couriers);
-                        }
-                    )
-        )
-        .catch(
-            err => {
-                console.error(err);
-                response.status(500).send("Error");
-            }
-        );
+    // courierRepo.getAll()
+    //     .then(
+    //         (couriers: any) =>
+    //             orderRepo.getAll()
+    //                 .then(
+    //                     (orders: any) => {
+    //                         couriers.map(
+    //                             (courier: Courier) => {
+    //                                 courier.allOrders = orders.filter(
+    //                                     (order: Order) => order.courierId === courier.id
+    //                                 ).length;
+    //                                 courier.unfulfilledOrders = orders.filter(
+    //                                     (order: Order) => order.courierId === courier.id && order.isfulFilled == false
+    //                                 ).length;
+    //                             }
+    //                         );
+    //                         console.log(couriers);
+    //                         response.send(couriers);
+    //                     }
+    //                 )
+    //     )
+    //     .catch(
+    //         err => {
+    //             console.error(err);
+    //             response.status(500).send("Error");
+    //         }
+    //     );
+
+    response.json({ data: "datadatadata" });
 });
 
 app.post("/couriers", (request, response) => {
